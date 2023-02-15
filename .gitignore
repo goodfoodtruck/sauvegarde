@@ -1,0 +1,9 @@
+#Client
+
+# Server
+/server/node_modules
+/server/dist
+/server/.env
+
+# Config
+.vscode
