@@ -39,3 +39,19 @@ export const createReview: RequestHandler = async (req, res) => {
         return res.status(error.status).json({message: error.message});
     })
 }
+
+/*
+*   Fetch all review
+*   Params: N/A
+*   Returns:
+*       message: string
+*       data: Review[]
+*/
+export const getAllReviews: RequestHandler = async (req, res) => {
+    Review.findAll().then((allReviews) => {
+        return res.status(200).json({message: "Reviews fetched successfully", data: allReviews});
+    }).catch((e) => {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    })
+}

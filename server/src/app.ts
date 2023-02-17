@@ -1,4 +1,5 @@
 import express = require("express")
+import cors = require("cors")
 import { urlencoded } from "body-parser"
 import { sequelize } from "./db/config"
 import userRoutes from "./routes/user"
@@ -7,6 +8,7 @@ require("dotenv").config();
 
 const app = express();
 
+app.use(cors());
 app.use(urlencoded({extended: true}));
 
 app.use("/user", userRoutes);
