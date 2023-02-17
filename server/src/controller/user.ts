@@ -52,6 +52,31 @@ export const getUserByName: RequestHandler = async (req, res) => {
 }
 
 /*
+*   Fetch user by its ID
+*   Params:
+*       id: number
+*   Returns:
+*       message: string
+*       data: User
+*/
+export const getUserById: RequestHandler = async (req, res) => {
+    const { id } = req.body;
+    
+    if (!id) return res.status(400).json({message: "Wrong or no parameter found"});
+
+    User.findByPk(id).then((user) => {
+        if (user) {
+            return res.status(200).json({message: "User fetched successfully", data: user});
+        } else {
+            return res.status(400).json({message: "User not found"});
+        }
+    }).catch((e) => {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    })
+}
+
+/*
 *   Fetch all users
 *   Params: N/A
 *   Returns:
