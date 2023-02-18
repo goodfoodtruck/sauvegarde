@@ -1,12 +1,12 @@
 import './App.scss'
-import { Reviews } from './components/Reviews'
+import { ReviewsComponent } from './components/ReviewsComponent'
 
 function App() {
 
 	return (
 		<div className="App">
 			<div>
-				<Reviews />
+				<ReviewsComponent />
 			</div>
 		</div>
 	)
