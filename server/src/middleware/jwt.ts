@@ -8,7 +8,7 @@ export const signAccessToken = (userId: number): Promise<string | undefined> => 
             issuer: "sauvegarde",
             audience: userId.toString()
         };
-        JWT.sign({}, process.env.ACCESS_TOKEN_SECRET as string, options, (err, token) => {
+        JWT.sign({}, process.env.ACCESS_TOKEN_SECRET!, options, (err, token) => {
             if (err) {
                 return reject(err);
             } else {
@@ -25,7 +25,7 @@ export const signRefreshToken = (userId: number): Promise<string | undefined> =>
             issuer: "sauvegarde",
             audience: userId.toString()
         };
-        JWT.sign({}, process.env.REFRESH_TOKEN_SECRET as string, options, (err, token) => {
+        JWT.sign({}, process.env.REFRESH_TOKEN_SECRET!, options, (err, token) => {
             if (err) {
                 return reject(err);
             } else {
@@ -36,13 +36,13 @@ export const signRefreshToken = (userId: number): Promise<string | undefined> =>
 }
 
 export const verifyAccessToken = (token: string) => {
-    const decodedToken = JWT.verify(token, process.env.ACCESS_TOKEN_SECRET as string) as JWT.JwtPayload;
+    const decodedToken = JWT.verify(token, process.env.ACCESS_TOKEN_SECRET!) as JWT.JwtPayload;
     const userId = parseFloat(decodedToken.aud as string);
     return userId;
 }
 
 export const verifyRefreshToken = (token: string) => {
-    const decodedToken = JWT.verify(token, process.env.REFRESH_TOKEN_SECRET as string) as JWT.JwtPayload;
+    const decodedToken = JWT.verify(token, process.env.REFRESH_TOKEN_SECRET!) as JWT.JwtPayload;
     const userId = parseFloat(decodedToken.aud as string);
     return userId;
 }
