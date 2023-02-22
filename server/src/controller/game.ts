@@ -1,6 +1,53 @@
 import { RequestHandler } from "express"
-import { getIgdbToken } from "../middleware/igdb"
-import { Game, IgdbGameResponse } from "../models/game"
+import { IgdbGameResponse, getIgdbToken } from "../middleware/igdb"
+import { Game } from "../models/game"
+
+/*
+*   Search game by name, for the client search bar
+*   Params:
+*       name: string
+*   Returns:
+*       message: string
+*       data[]:
+*           name: string
+*           first_release_date: number
+*/
+export const searchGameByName: RequestHandler = async (req, res) => {
+    try {
+        const igdbToken = await getIgdbToken();
+        const request: RequestInit = {
+            method: "POST",
+            headers: {
+                "Client-ID": process.env.IGDB_CLIENT_ID!,
+                "Authorization": `Bearer ${igdbToken.accessToken}`,
+            },
+            body: `fields
+                name,
+                first_release_date;
+                where name ~ *"${req.body.name}"* & rating_count > 0;
+                sort rating_count desc;
+            `
+        };
+
+        fetch("https://api.igdb.com/v4/games", request)
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error("Failed to fetch IGDB");
+                } else {
+                    return response.json();
+                }
+            })
+            .then((data: IgdbGameResponse[]) => {
+                return res.status(200).json({message: "Games fetched successfully", data: data});
+            })
+            .catch(e => {
+                console.error(e);
+                return res.status(500).json({message: e.message});
+            })
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 /*
 *   Fetch game by its ID using the IGDB API
@@ -44,7 +91,7 @@ export const getGameById: RequestHandler = async (req, res) => {
                 }
             })
             .then((data: IgdbGameResponse[]) => {
-                const game: Game = Game.createFromIgdbGameResponse(data[0]);
+                const game = Game.parseIgdbGameResponse(data[0]);
                 return res.status(200).json({message: "Game fetched successfully", data: game});
             })
             .catch(e => {

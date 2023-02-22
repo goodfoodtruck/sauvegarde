@@ -18,8 +18,8 @@ app.use("/game", gameRoutes);
 
 sequelize.sync().then(() => {
     console.log("Synchronized with database successfully");
-}).catch(() => {
-    console.log("Error connecting to database");
+}).catch((e) => {
+    console.error("Error connecting to database", e);
 })
 
 app.listen(process.env.PORT, () => {

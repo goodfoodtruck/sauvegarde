@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize-typescript"
 import { User } from "../models/user"
 import { Review } from "../models/review"
-import { IgdbToken } from "../models/igdbToken";
+import { IgdbToken } from "../models/igdbToken"
+import { Game } from "../models/game"
 require("dotenv").config();
 
 export const sequelize = new Sequelize({
@@ -11,5 +12,5 @@ export const sequelize = new Sequelize({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     logging: false,
-    models: [User, Review, IgdbToken]
+    models: [User, Review, Game, IgdbToken]
 })

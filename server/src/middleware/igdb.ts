@@ -1,5 +1,15 @@
 import { IgdbToken } from "../models/igdbToken"
 
+export interface IgdbGameResponse {
+    id: number
+    cover: { image_id: string}
+    first_release_date: number
+    genres: Array<{name: string}>
+    involved_companies: Array<{company: {name: string}, developer: boolean}>
+    name: string
+    summary: string
+}
+
 interface ExternalIgdbToken {
     access_token: string
     expires_in: number
