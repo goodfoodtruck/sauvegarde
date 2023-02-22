@@ -1,15 +1,20 @@
+@import './utilities/variables';
+
+@import './components/search';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: #213547;
-  background-color: #eee;
+  color-scheme: dark;
+  color: $font-primary-color;
+  background-color: $background-primary-color;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,7 +26,7 @@
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
 }

@@ -1,4 +1,3 @@
-import './App.scss'
 import { ReviewsComponent } from './components/ReviewsComponent'
 
 function App() {
