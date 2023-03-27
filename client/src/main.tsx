@@ -2,8 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './sass/index.scss'
-import { GamesPage } from './pages/GamesPage'
+import { GamePage } from './pages/GamePage'
 import { HomePage } from './pages/HomePage'
+import { ErrorPage } from './pages/ErrorPage'
+import { useGameLoader } from './hooks/useGameLoader'
 
 const router = createBrowserRouter([
   {
@@ -11,8 +13,10 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "/games",
-    element: <GamesPage />,
+    path: "/games/:slug",
+    element: <GamePage />,
+    loader: useGameLoader,
+    errorElement: <ErrorPage />
   }
 ]);
 

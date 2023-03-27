@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { ApiResponse, useApi } from "./useApi";
+import { useEffect, useState } from "react"
+import { ApiResponse } from "./useApi"
 
 export interface SearchGame {
     name: string
     first_release_date: number
+    slug: string
 }
 
 export const useGameSearch = (search: string) => {
