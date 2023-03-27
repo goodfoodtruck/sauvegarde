@@ -1,5 +1,5 @@
 import { RequestHandler } from "express"
-import { IgdbGameResponse, getIgdbToken } from "../middleware/igdb"
+import { IgdbGameResponse, IgdbSearchGameResponse, getIgdbToken } from "../middleware/igdb"
 import { Game } from "../models/game"
 
 /*
@@ -11,6 +11,7 @@ import { Game } from "../models/game"
 *       data[]:
 *           name: string
 *           first_release_date: number
+*           slug: string
 */
 export const searchGameByName: RequestHandler = async (req, res) => {
     try {
@@ -23,7 +24,8 @@ export const searchGameByName: RequestHandler = async (req, res) => {
             },
             body: `fields
                 name,
-                first_release_date;
+                first_release_date,
+                slug;
                 where name ~ *"${req.body.name}"* & rating_count > 0;
                 sort rating_count desc;
             `
@@ -37,7 +39,7 @@ export const searchGameByName: RequestHandler = async (req, res) => {
                     return response.json();
                 }
             })
-            .then((data: IgdbGameResponse[]) => {
+            .then((data: IgdbSearchGameResponse[]) => {
                 return res.status(200).json({message: "Games fetched successfully", data: data});
             })
             .catch(e => {
@@ -50,15 +52,15 @@ export const searchGameByName: RequestHandler = async (req, res) => {
 }
 
 /*
-*   Fetch game by its ID using the IGDB API
+*   Fetch game by its slug using the IGDB API
 *   Params:
-*       id: number
+*       slug: string
 *   Returns:
 *       message: string
 *       data: Game
 */
-export const getGameById: RequestHandler = async (req, res) => {
-    if (!req.body.id || !Number(req.body.id)) {
+export const getGameBySlug: RequestHandler = async (req, res) => {
+    if (!req.body.slug || !String(req.body.slug)) {
         return res.status(400).json({message: "Wrong or no parameter found"});
     }
 
@@ -73,12 +75,14 @@ export const getGameById: RequestHandler = async (req, res) => {
             body: `fields
                 name,
                 cover.image_id,
+                screenshots.image_id,
                 genres.name,
+                platforms.name,
                 first_release_date,
                 involved_companies.developer,
                 involved_companies.company.name,
                 summary;
-                where id = ${req.body.id};
+                where slug = "${req.body.slug}";
             `
         };
 

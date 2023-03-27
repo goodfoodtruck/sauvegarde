@@ -1,13 +1,13 @@
 import { Router } from "express"
 
 import {
-    getGameById,
+    getGameBySlug,
     searchGameByName
 } from "../controller/game"
 
 const router = Router();
 
-router.post("/", getGameById);
+router.post("/slug", getGameBySlug);
 router.post("/search", searchGameByName);
 
 export default router;

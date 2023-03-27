@@ -2,12 +2,20 @@ import { IgdbToken } from "../models/igdbToken"
 
 export interface IgdbGameResponse {
     id: number
-    cover: { image_id: string}
+    cover: {image_id: string}
+    screenshots: Array<{image_id: string}>
     first_release_date: number
     genres: Array<{name: string}>
+    platforms: Array<{name: string}>
     involved_companies: Array<{company: {name: string}, developer: boolean}>
     name: string
     summary: string
+}
+
+export interface IgdbSearchGameResponse {
+    name: string
+    first_release_date: number
+    slug: string
 }
 
 interface ExternalIgdbToken {
