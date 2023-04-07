@@ -1,9 +1,10 @@
-import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript"
+import { Table, Model, Column, DataType, HasMany, PrimaryKey } from "sequelize-typescript"
 import { Review } from "./review"
 import { IgdbGameResponse } from "../middleware/igdb"
 
 @Table({tableName: "games"})
 export class Game extends Model {
+    @PrimaryKey
     @Column({type: DataType.INTEGER, allowNull: false})
     igdb_id!: number;
 

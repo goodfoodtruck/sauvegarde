@@ -3,13 +3,14 @@ import { Review } from "../models/review"
 import { errorHandler } from "../middleware/error"
 import { verifyAccessToken } from "../middleware/jwt"
 import { User } from "../models/user"
+import { Game } from "../models/game"
 
 /*
 *   Create user review with user's access token
 *   Header:
 *       Authorization: string ("Bearer " + JsonWebToken)
 *   Params:
-*       igb_id: number
+*       game: Game
 *       description: string
 *   Returns:
 *       message: string
@@ -17,27 +18,18 @@ import { User } from "../models/user"
 */
 export const createReview: RequestHandler = async (req, res) => {
     try {
-        req.body.userId = verifyAccessToken(req.headers.authorization?.split(" ")[1] as string);
+        const userId = verifyAccessToken(req.headers.authorization?.split(" ")[1] as string);
+        const [game, created] = await Game.findOrCreate({
+            where: { igdb_id: req.body.game.igdb_id },
+            defaults: req.body.game
+        });
+        const user = await User.findOne({where: {id: userId}});
+        const createdReview = await Review.create({gameId: game.igdb_id, userId: user?.id, description: req.body.description});
+        return res.status(200).json({message: "Review created successfully", data: createdReview});
     } catch(e) {
         const error = errorHandler(e);
         return res.status(error.status).json({message: error.message});
     }
-
-    User.findOne({where: {id: req.body.userId}}).then((user) => {
-        if (user) {
-            Review.create(req.body).then((createdReview) => {
-                return res.status(200).json({message: "Review created successfully", data: createdReview});
-            }).catch((e) => {
-                const error = errorHandler(e);
-                return res.status(error.status).json({message: error.message});
-            });
-        } else {
-            return res.status(400).json({message: "User not found"});
-        }
-    }).catch((e) => {
-        const error = errorHandler(e);
-        return res.status(error.status).json({message: error.message});
-    })
 }
 
 /*
