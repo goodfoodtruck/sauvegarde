@@ -2,7 +2,7 @@ import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { ConnectionRefusedError, ForeignKeyConstraintError, ValidationError } from "sequelize"
 
 export const errorHandler = (e: unknown) => {
-    let error = {status: 500, message: ""};
+    let error = {status: 500, message: "Unknown error appeared"};
     if (e instanceof ValidationError) {
         error = {
             status: 400,
@@ -16,7 +16,7 @@ export const errorHandler = (e: unknown) => {
     } else if (e instanceof ForeignKeyConstraintError) {
         error = {
             status: 422,
-            message: "User does not exist"
+            message: "Violated foreign key constraint in the database"
         }
     } else if (e instanceof TokenExpiredError) {
         error = {

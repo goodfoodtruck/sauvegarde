@@ -17,6 +17,13 @@ import { Game } from "../models/game"
 *       data: Review
 */
 export const createReview: RequestHandler = async (req, res) => {
+    {
+        let descriptionType: any = Review.getAttributes().description.type;
+        if (req.body.description.length > descriptionType.options.length) {
+            return res.status(400).json({message: `Description field is too long. Must be less than ${descriptionType.options.length} characters`});
+        }
+    }
+
     try {
         const userId = verifyAccessToken(req.headers.authorization?.split(" ")[1] as string);
         const [game, created] = await Game.findOrCreate({
