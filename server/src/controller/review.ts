@@ -40,6 +40,26 @@ export const createReview: RequestHandler = async (req, res) => {
 }
 
 /*
+*   Fetch all game's reviews
+*   Params:
+*       game: Game
+*   Returns:
+*       message: string
+*       data: Review[]
+*/
+export const getAllGameReviews: RequestHandler = async (req, res) => {
+    try {
+        const gameReviews = await Review.findAll({where: {gameId: req.body.game.igdb_id}});
+        if (gameReviews) {
+            return res.status(200).json({message: "Reviews fetched successfully", data: gameReviews});
+        }
+    } catch(e) {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    }
+}
+
+/*
 *   Fetch all review
 *   Params: N/A
 *   Returns:
