@@ -10,8 +10,8 @@ export const GamePage: FunctionComponent = () => {
             <div className="absolute w-full h-96 -z-10 top-0 left-0 md:bg-100 bg-center" style={{backgroundImage: `url('${game.screenshotUrl}')`}}>
                 <div className="gradient h-full" style={{background: "linear-gradient(0deg, rgba(37,36,57,1) 0%, rgba(253,187,45,0) 100%)"}}></div>
             </div>
-            <div className="grid grid-cols-3 ml-5 gap-5 md:gap-10 pt-44 md:pt-96">
-                <div className="col-span-1 md:-translate-y-32 md:text-end">
+            <div className="md:grid md:grid-cols-3 gap-5 md:gap-10 pt-44 md:pt-96">
+                <div className="md:col-span-1 md:-translate-y-32 text-center md:text-end">
                     <div className="inline-flex rounded-sm border border-zinc-500 overflow-hidden">
                         <img className="w-44" src={game.coverUrl} />
                     </div>
@@ -36,35 +36,33 @@ export const GamePage: FunctionComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-2">
-                    <div className="flex items-end">
-                        <h1 className="text-3xl md:text-4xl font-bold text-white">
+                <div className="md:col-span-2 mx-4 md:mx-0">
+                    <div className="md:flex md:items-end py-4 md:my-0">
+                        <h1 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">
                             {game.name}
                             <span className="font-special font-sans text-lg md:text-xl ml-2">{game.first_release_year}</span>
                         </h1>
                     </div>
-                    <div className="md:hidden">
-                        <div className="max-w-xl mt-2 font-sans ">
-                            <h4>developed by <span className="font-special font-bold">{game.involved_companies}</span></h4>
+                    <div className="md:hidden my-3">
+                        <div className="max-w-xl mt-2 font-sans">
+                            <h4 className="text-sm md:text-base">developed by</h4>
+                            <span className="font-special font-bold">{game.involved_companies}</span>
                         </div>
-                        <div className="max-w-xl mt-2 font-sans ">
-                            <h4>genre of <span className="font-special font-bold">{game.genres}</span></h4>
+                        <div className="max-w-xl mt-2 font-sans">
+                            <h4 className="text-sm md:text-base">genres</h4>
+                            <span className="font-special font-bold">{game.genres}</span>
                         </div>
-                        <div className="max-w-xl mt-2 font-sans ">
-                            <h4>play on <span className="font-special font-bold">{game.platforms}</span></h4>
+                        <div className="max-w-xl mt-2 font-sans">
+                            <h4 className="text-sm md:text-base">platforms</h4>
+                            <span className="font-special font-bold">{game.platforms}</span>
                         </div>
                     </div>
-                    <div className="hidden md:block max-w-xl mt-4">
+                    <div className="max-w-full text-sm md:text-base md:max-w-xl py-3">
                         <p className="line-clamp-6">
                             {game.summary}
                         </p>
                     </div>
                 </div>
-            </div>
-            <div className="max-w-xl m-4 md:hidden">
-                <p className="line-clamp-6">
-                    {game.summary}
-                </p>
             </div>
         </div>
     )
