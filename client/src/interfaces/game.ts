@@ -1,5 +1,6 @@
 export interface Game {
     name: string
+    igdb_id: number
     coverUrl: string
     screenshotUrl: string
     genres: string

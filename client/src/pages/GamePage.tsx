@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react"
 import { useLoaderData } from "react-router-dom"
 import { Game } from "../interfaces/game"
+import { GameReviewsComponent } from "../components/GameReviewsComponent"
 
 export const GamePage: FunctionComponent = () => {
     const game = useLoaderData() as Game;
@@ -61,6 +62,11 @@ export const GamePage: FunctionComponent = () => {
                         <p className="line-clamp-6">
                             {game.summary}
                         </p>
+                    </div>
+                    <span className="max-w-full md:max-w-xl md:mr-4 my-3" id="separator" />
+                    <div id="reviews" className="md:mr-4">
+                        <h3 className="font-sans md:text-xl">Reviews</h3>
+                        <GameReviewsComponent game={game} />
                     </div>
                 </div>
             </div>
