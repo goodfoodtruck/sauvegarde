@@ -5,8 +5,12 @@
 @import './base/reset';
 @import './base/typography';
 
+// Pages
+@import './pages/game';
+
 // Components
 @import './components/search';
+@import './components/review';
 
 
 @tailwind base;

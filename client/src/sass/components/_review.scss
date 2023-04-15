@@ -1,0 +1,7 @@
+#review {
+    background: linear-gradient(0deg, rgba(29,29,50,1) 50%, #292945 100%);
+
+    &.full {
+        background: $background-secondary-color;
+    }
+}
