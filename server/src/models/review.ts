@@ -11,7 +11,7 @@ export class Review extends Model {
     @BelongsTo(() => User)
     user!: User;
 
-    @Column({type: DataType.STRING(500), allowNull: false})
+    @Column({type: DataType.STRING(15000), allowNull: false})
     description!: string;
 
     @ForeignKey(() => Game)
