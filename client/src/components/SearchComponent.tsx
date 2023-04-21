@@ -21,7 +21,7 @@ export const SearchComponent: FunctionComponent = () => {
     }, []);
 
     return (
-        <div ref={searchRef} className="search w-fit mx-auto flex items-center mt-20 flex-col">
+        <div ref={searchRef} id="search" className="flex items-center flex-col font-sans">
             <input
                 type="text"
                 className="w-64 p-2 m-auto rounded-md shadow-lg outline-none"
@@ -29,7 +29,7 @@ export const SearchComponent: FunctionComponent = () => {
             />
             <ul className="divide-y divide-zinc-700">
                 {focus && games?.map(game => (
-                    <li key={game.slug} className="w-64 bg-black bg-opacity-20 text-sm hover:bg-zinc-700 hover:text-zinc-200">
+                    <li key={game.slug} className="w-64 bg-black bg-opacity-50 backdrop-blur-sm text-sm hover:bg-black hover:bg-opacity-70 hover:text-zinc-200">
                         <Link to={`games/${game.slug}`} className="contents">
                             <h3 className="truncate p-2">
                                 {game.name} ({new Date(new Date(game.first_release_date * 1000)).getFullYear()})
