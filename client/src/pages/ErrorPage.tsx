@@ -7,7 +7,7 @@ export const ErrorPage: FunctionComponent = () => {
     
     if (isRouteErrorResponse(error)) {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className="h-screen flex flex-col justify-center">
                 <div className="text-center">
                 <h1 className="font-bold text-xl">{error.status}</h1>
                     <p>{error.statusText}</p>
@@ -21,7 +21,7 @@ export const ErrorPage: FunctionComponent = () => {
         )
     } else {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className="h-screen flex flex-col justify-center">
                 <div className="text-center">
                     <h1 className="font-bold text-xl">Oops !</h1>
                     <p>An error has occured</p>
