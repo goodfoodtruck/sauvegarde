@@ -10,7 +10,7 @@ export const HeaderComponent: FunctionComponent = () => {
             <Link to={"/"}>
                 <h3 className="text-2xl font-bold text-white">Sauvegarde</h3>
             </Link>
-            <button className="md:hidden font-sans font-bold float-right" onClick={() => setShowMenu(!showMenu)}>Menu</button>
+            <button id="button" className="md:hidden font-sans font-bold float-right" onClick={() => setShowMenu(!showMenu)}>Menu</button>
             <div className={`w-screen p-2 md:w-auto md:block ${showMenu ? 'block' : 'hidden'}`}>
                 <SearchComponent />
             </div>
