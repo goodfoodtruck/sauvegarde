@@ -16,14 +16,23 @@ import * as bcrypt from "bcrypt"
 *       refreshToken: string (JsonWebToken)
 */
 export const createUser: RequestHandler = async (req, res) => {
-    User.create(req.body).then(async (createdUser) => {
-        const accessToken = await signAccessToken(createdUser.id);
-        const refreshToken = await signRefreshToken(createdUser.id);
-        return res.status(200).json({message: "User created successfully", data: createdUser, accessToken: accessToken, refreshToken: refreshToken});
-    }).catch((e) => {
-        const error = errorHandler(e);
-        return res.status(error.status).json({message: error.message});
-    });
+    if (!req.body.name || !req.body.password) {
+        return res.status(400).json({message: "Wrong or no parameter found"})
+    }
+    User.findOne({where: {name: req.body.name}}).then((user) => {
+        if (!user) {
+            User.create(req.body).then(async (createdUser) => {
+                const accessToken = await signAccessToken(createdUser.id);
+                const refreshToken = await signRefreshToken(createdUser.id);
+                return res.status(200).json({message: "User created successfully", data: {accessToken: accessToken, refreshToken: refreshToken}})
+            }).catch((e) => {
+                const error = errorHandler(e);
+                return res.status(error.status).json({message: error.message})
+            })
+        } else {
+            return res.status(409).json({message: "User already exists"})
+        }
+    })
 }
 
 /*
