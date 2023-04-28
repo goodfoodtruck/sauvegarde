@@ -1,0 +1,12 @@
+form {
+    background: $background-secondary-color;
+
+    input[type=text], input[type=password] {
+        background: $input-background-color;
+    }
+
+    #error {
+        color: $error-primary-color;
+        border: 1px $error-primary-color solid;
+    }
+}

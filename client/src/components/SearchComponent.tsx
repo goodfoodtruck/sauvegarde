@@ -21,13 +21,13 @@ export const SearchComponent: FunctionComponent = () => {
     }, []);
 
     return (
-        <div ref={searchRef} id="search" className="flex items-center flex-col font-sans">
+        <div ref={searchRef} id="search" className="relative flex items-center flex-col font-sans">
             <input
                 type="text"
                 className="w-64 p-2 m-auto rounded-md shadow-lg outline-none"
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <ul className="divide-y divide-zinc-700">
+            <ul className="absolute top-10 divide-y divide-zinc-700">
                 {focus && games?.map(game => (
                     <li key={game.slug} className="w-64 bg-black bg-opacity-50 backdrop-blur-sm text-sm hover:bg-black hover:bg-opacity-70 hover:text-zinc-200">
                         <Link to={`games/${game.slug}`} className="contents">

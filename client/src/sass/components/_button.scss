@@ -1,5 +1,10 @@
 #button {
+    color: white;
     border-radius: 7px;
-    padding: 2px 8px;
-    background: linear-gradient(90deg, rgba(69,59,87,1) 0%, rgba(101,81,117,1) 100%);
+    padding: 5px 15px;
+    background: linear-gradient(270deg, rgba(196,146,210,1) 0%, rgba(101,81,117,1) 100%);
+
+    &:active {
+        filter: brightness(0.8);
+    }
 }

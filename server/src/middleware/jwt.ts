@@ -4,7 +4,7 @@ require("dotenv").config();
 export const signAccessToken = (userId: number): Promise<string | undefined> => {
     return new Promise((resolve, reject) => {
         const options = {
-            expiresIn: '30s',
+            expiresIn: '7d',
             issuer: "sauvegarde",
             audience: userId.toString()
         };
