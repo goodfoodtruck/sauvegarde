@@ -57,7 +57,8 @@ export const getUserByName: RequestHandler = async (req, res) => {
 *       id: number
 *   Returns:
 *       message: string
-*       data: User
+*       data: 
+*           name: string
 */
 export const getUserById: RequestHandler = async (req, res) => {
     const { id } = req.body;
@@ -66,32 +67,7 @@ export const getUserById: RequestHandler = async (req, res) => {
 
     User.findByPk(id).then((user) => {
         if (user) {
-            return res.status(200).json({message: "User fetched successfully", data: user});
-        } else {
-            return res.status(400).json({message: "User not found"});
-        }
-    }).catch((e) => {
-        const error = errorHandler(e);
-        return res.status(error.status).json({message: error.message});
-    })
-}
-
-/*
-*   Fetch user name by its ID
-*   Params:
-*       id: number
-*   Returns:
-*       message: string
-*       data: string
-*/
-export const getUserNameById: RequestHandler = async (req, res) => {
-    const { id } = req.body;
-    
-    if (!id) return res.status(400).json({message: "Wrong or no parameter found"});
-
-    User.findByPk(id).then((user) => {
-        if (user) {
-            return res.status(200).json({message: "User name fetched successfully", data: user.name});
+            return res.status(200).json({message: "User fetched successfully", data: {name: user.name}})
         } else {
             return res.status(400).json({message: "User not found"});
         }
@@ -154,9 +130,9 @@ export const getAllUserReviews: RequestHandler = async (req, res) => {
 *       password: string
 *   Returns:
 *       message: string
-*       data: User
-*       accessToken: string (JsonWebToken)
-*       refreshToken: string (JsonWebToken)
+*       data:
+*           accessToken: string (JsonWebToken)
+*           refreshToken: string (JsonWebToken)
 */
 export const logUser: RequestHandler = async (req, res) => {
     if (!req.body.name || !req.body.password) {
@@ -170,7 +146,7 @@ export const logUser: RequestHandler = async (req, res) => {
                 try {
                     const accessToken = await signAccessToken(user.id);
                     const refreshToken = await signRefreshToken(user.id);
-                    return res.status(200).json({message: "User logged successfully", data: user, accessToken: accessToken, refreshToken: refreshToken});
+                    return res.status(200).json({message: "User logged successfully", data: {accessToken: accessToken, refreshToken: refreshToken}})
                 } catch(e) {
                     const error = errorHandler(e);
                     return res.status(error.status).json({message: error.message});
@@ -201,7 +177,7 @@ export const refreshUserAccess: RequestHandler = async (req, res) => {
         const userId = verifyRefreshToken(req.body.refreshToken);
         const accessToken = await signAccessToken(userId);
         const refreshToken = await signRefreshToken(userId);
-        return res.status(200).json({message: "Access token refreshed successfully", accessToken: accessToken, refreshToken: refreshToken});
+        return res.status(200).json({message: "Access token refreshed successfully", data: {accessToken: accessToken, refreshToken: refreshToken}})
     } catch(e) {
         const error = errorHandler(e);
         return res.status(error.status).json({message: error.message});
