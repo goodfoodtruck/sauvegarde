@@ -69,7 +69,7 @@ export const getUserByName: RequestHandler = async (req, res) => {
 *       data: 
 *           name: string
 */
-export const getUserById: RequestHandler = async (req, res) => {
+export const getUserNameById: RequestHandler = async (req, res) => {
     const { id } = req.body;
     
     if (!id) return res.status(400).json({message: "Wrong or no parameter found"});
