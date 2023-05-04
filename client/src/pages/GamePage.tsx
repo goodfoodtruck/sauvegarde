@@ -1,13 +1,23 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useContext, useState } from "react"
 import { useLoaderData } from "react-router-dom"
 import { Game } from "../interfaces/game"
 import { GameReviewsComponent } from "../components/GameReviewsComponent"
+import { AuthContext } from "../contexts/AuthContext"
+import { EditorComponent } from "../components/EditorComponent"
 
 export const GamePage: FunctionComponent = () => {
+    const [isReviewing, setIsReviewing] = useState<boolean>();
     const game = useLoaderData() as Game;
+    const authContext = useContext(AuthContext);
 
     return (
         <div className="Game">
+            {authContext.isConnected && isReviewing && (
+                <EditorComponent
+                    setIsReviewing={setIsReviewing}
+                    game={game}
+                />
+            )}
             <div className="absolute w-full h-96 -z-10 top-0 left-0 md:bg-100 bg-center" style={{backgroundImage: `url('${game.screenshotUrl}')`}}>
                 <div className="gradient h-full" style={{background: "linear-gradient(0deg, rgba(37,36,57,1) 0%, rgba(253,187,45,0) 100%)"}}></div>
             </div>
@@ -58,10 +68,13 @@ export const GamePage: FunctionComponent = () => {
                             <span className="font-special font-bold">{game.platforms}</span>
                         </div>
                     </div>
-                    <div className="max-w-full text-sm md:text-base md:max-w-xl py-3">
-                        <p className="line-clamp-6">
+                    <div className="max-w-full text-sm md:text-base md:max-w-xl">
+                        <p className="my-3 line-clamp-6">
                             {game.summary}
                         </p>
+                        {authContext.isConnected && (
+                            <button id="button" onClick={() => setIsReviewing(true)} className="w-full md:max-w-full py-1 font-sans font-bold">+ Review this game</button>
+                        )}
                     </div>
                     <span className="max-w-full md:max-w-xl md:mr-4 my-3" id="separator" />
                     <div id="reviews" className="md:mr-4">
@@ -70,6 +83,7 @@ export const GamePage: FunctionComponent = () => {
                     </div>
                 </div>
             </div>
+            
         </div>
     )
 }

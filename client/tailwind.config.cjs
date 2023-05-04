@@ -5,8 +5,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    backgroundSize: {
-      '100': '100%',
+    extend: {
+      backgroundSize: {
+        '100': '100%',
+      },
+      width: {
+        '116': '34rem',
+      }
     }
   },
   plugins: [
