@@ -7,7 +7,7 @@ import {
 
 const router = Router();
 
-router.post("/", createReview);
+router.post("/create", createReview);
 router.post("/game", getAllGameReviews);
 router.get("/all", getAllReviews);
 

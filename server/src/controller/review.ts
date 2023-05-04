@@ -21,6 +21,8 @@ export const createReview: RequestHandler = async (req, res) => {
         let descriptionType: any = Review.getAttributes().description.type;
         if (req.body.description.length > descriptionType.options.length) {
             return res.status(400).json({message: `Description field is too long. Must be less than ${descriptionType.options.length} characters`});
+        } else if (req.body.description.length < 133) {
+            return res.status(400).json({message: "Description must at least contain 1 caracter"});
         }
     }
 
