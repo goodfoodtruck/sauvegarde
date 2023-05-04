@@ -29,7 +29,7 @@ export class Game extends Model {
     @Column({type: DataType.STRING, allowNull: false})
     involved_companies!: string;
 
-    @Column({type: DataType.STRING(600), allowNull: false})
+    @Column({type: DataType.STRING(5000), allowNull: false})
     summary!: string;
 
     @HasMany(() => Review)
