@@ -26,6 +26,7 @@ export const SearchComponent: FunctionComponent = () => {
                 type="text"
                 className="w-64 p-2 m-auto rounded-md shadow-lg outline-none"
                 onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search..."
             />
             <ul className="absolute top-10 divide-y divide-zinc-700">
                 {focus && games?.map(game => (
