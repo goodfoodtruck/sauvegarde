@@ -4,6 +4,7 @@ import { Game } from "../interfaces/game"
 import { GameReviewsComponent } from "../components/GameReviewsComponent"
 import { AuthContext } from "../contexts/AuthContext"
 import { EditorComponent } from "../components/EditorComponent"
+import { PencilIcon } from "@heroicons/react/24/outline"
 
 export const GamePage: FunctionComponent = () => {
     const [isReviewing, setIsReviewing] = useState<boolean>();
@@ -73,7 +74,10 @@ export const GamePage: FunctionComponent = () => {
                             {game.summary}
                         </p>
                         {authContext.isConnected && (
-                            <button id="button" onClick={() => setIsReviewing(true)} className="w-full md:max-w-full py-1 font-sans font-bold">+ Review this game</button>
+                            <button id="button" onClick={() => setIsReviewing(true)} className="w-full md:max-w-full flex items-center justify-center py-1 font-sans font-bold">
+                                <PencilIcon className="w-5 h-5 mr-1" />
+                                Review this game
+                            </button>
                         )}
                     </div>
                     <span className="max-w-full md:max-w-xl md:mr-4 my-3" id="separator" />
