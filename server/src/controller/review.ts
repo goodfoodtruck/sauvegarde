@@ -51,7 +51,7 @@ export const createReview: RequestHandler = async (req, res) => {
 */
 export const getAllGameReviews: RequestHandler = async (req, res) => {
     try {
-        const gameReviews = await Review.findAll({where: {gameId: req.body.game.igdb_id}});
+        const gameReviews = await Review.findAll({where: {gameId: req.body.igdb_id}});
         if (gameReviews) {
             return res.status(200).json({message: "Reviews fetched successfully", data: gameReviews});
         }
@@ -75,4 +75,16 @@ export const getAllReviews: RequestHandler = async (req, res) => {
         const error = errorHandler(e);
         return res.status(error.status).json({message: error.message});
     })
+}
+
+export const destroyReview: RequestHandler = async (req, res) => {
+    try {
+        const verifyToken = verifyAccessToken(req.headers.authorization?.split(" ")[1] as string);
+        Review.destroy({where: {id: req.body.id}}).then(() => {
+            return res.status(200).json({message: "Reviews deleted successfully"});
+        })
+    } catch(e) {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    }
 }
