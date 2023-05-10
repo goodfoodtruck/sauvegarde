@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom"
 import { HeaderComponent } from "../components/HeaderComponent"
 import { AuthContext } from "../contexts/AuthContext"
 import { useAuthenticated } from "../hooks/useAuthenticated"
+import { FooterComponent } from "../components/FooterComponent"
 
 export const RootLayout = () => {
     const [isConnected, setIsConnected] = useState(useAuthenticated());
@@ -17,6 +18,9 @@ export const RootLayout = () => {
                 <main>
                     <Outlet />
                 </main>
+                <footer>
+                    <FooterComponent />
+                </footer>
             </AuthContext.Provider>
         </div>
     )
