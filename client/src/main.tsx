@@ -8,6 +8,8 @@ import { LoginPage } from './pages/LoginPage'
 import { ErrorPage } from './pages/ErrorPage'
 import { useGameLoader } from './hooks/useGameLoader'
 import { RootLayout } from './layouts/RootLayout'
+import { ProfilePage } from './pages/ProfilePage'
+import { useProfileLoader } from './hooks/useProfileLoader'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +27,12 @@ const router = createBrowserRouter(
       <Route
         path="/login"
         element={<LoginPage />}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/profile/:slug"
+        element={<ProfilePage />}
+        loader={useProfileLoader}
         errorElement={<ErrorPage />}
       />
     </Route>
