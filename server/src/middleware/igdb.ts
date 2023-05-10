@@ -10,6 +10,7 @@ export interface IgdbGameResponse {
     involved_companies: Array<{company: {name: string}, developer: boolean}>
     name: string
     summary: string
+    slug: string
 }
 
 export interface IgdbSearchGameResponse {

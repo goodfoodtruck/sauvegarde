@@ -69,14 +69,40 @@ export const getUserByName: RequestHandler = async (req, res) => {
 *       data: 
 *           name: string
 */
-export const getUserNameById: RequestHandler = async (req, res) => {
+export const getUserById: RequestHandler = async (req, res) => {
     const { id } = req.body;
     
     if (!id) return res.status(400).json({message: "Wrong or no parameter found"});
 
     User.findByPk(id).then((user) => {
         if (user) {
-            return res.status(200).json({message: "User fetched successfully", data: {name: user.name}})
+            return res.status(200).json({message: "User fetched successfully", data: {name: user.name, slug: user.slug}})
+        } else {
+            return res.status(400).json({message: "User not found"});
+        }
+    }).catch((e) => {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    })
+}
+
+/*
+*   Fetch user by its slug
+*   Params:
+*       id: number
+*   Returns:
+*       message: string
+*       data: 
+*           name: string
+*/
+export const getUserBySlug: RequestHandler = async (req, res) => {
+    const { slug } = req.body;
+    
+    if (!slug) return res.status(400).json({message: "Wrong or no parameter found"});
+
+    User.findOne({where: {slug: slug}}).then((user) => {
+        if (user) {
+            return res.status(200).json({message: "User fetched successfully", data: {name: user.name, id: user.id}})
         } else {
             return res.status(400).json({message: "User not found"});
         }

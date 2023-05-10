@@ -3,11 +3,12 @@ import { Router } from "express"
 import {
     createUser,
     getUserByName,
-    getUserNameById,
+    getUserById,
     getAllUsers,
     getAllUserReviews,
     logUser,
-    refreshUserAccess
+    refreshUserAccess,
+    getUserBySlug
 } from "../controller/user"
 
 const router = Router();
@@ -16,8 +17,9 @@ router.post("/register", createUser);
 router.post("/login", logUser);
 router.post("/refresh", refreshUserAccess);
 router.get("/", getUserByName);
-router.post("/name", getUserNameById);
+router.post("/id", getUserById);
+router.post("/slug", getUserBySlug);
 router.get("/all", getAllUsers);
-router.get("/reviews", getAllUserReviews);
+router.post("/reviews", getAllUserReviews);
 
 export default router;
