@@ -1,6 +1,7 @@
 import { RequestHandler } from "express"
 import { IgdbGameResponse, IgdbSearchGameResponse, getIgdbToken } from "../middleware/igdb"
 import { Game } from "../models/game"
+import { errorHandler } from "../middleware/error";
 
 /*
 *   Search game by name, for the client search bar
@@ -74,6 +75,7 @@ export const getGameBySlug: RequestHandler = async (req, res) => {
             },
             body: `fields
                 name,
+                slug,
                 cover.image_id,
                 screenshots.image_id,
                 genres.name,
@@ -105,4 +107,29 @@ export const getGameBySlug: RequestHandler = async (req, res) => {
     } catch (e) {
         console.error(e);
     }
+}
+
+/*
+*   Fetch game by its id
+*   Params:
+*       id: number
+*   Returns:
+*       message: string
+*       data: Game
+*/
+export const getGameById: RequestHandler = async (req, res) => {
+    const { igdb_id } = req.body;
+    
+    if (!igdb_id) return res.status(400).json({message: "Wrong or no parameter found"});
+
+    Game.findByPk(igdb_id).then((game) => {
+        if (game) {
+            return res.status(200).json({message: "Game fetched successfully", data: game})
+        } else {
+            return res.status(400).json({message: "Game not found"});
+        }
+    }).catch((e) => {
+        const error = errorHandler(e);
+        return res.status(error.status).json({message: error.message});
+    })
 }

@@ -12,6 +12,9 @@ export class Game extends Model {
     name!: string;
 
     @Column({type: DataType.STRING, allowNull: false})
+    slug!: string;
+
+    @Column({type: DataType.STRING, allowNull: false})
     coverUrl!: string;
 
     @Column({type: DataType.STRING, allowNull: false})
@@ -38,6 +41,7 @@ export class Game extends Model {
     static parseIgdbGameResponse(igdbGame: IgdbGameResponse) {
         const igdb_id = igdbGame.id;
         const name = igdbGame.name;
+        const slug = igdbGame.slug;
         const coverUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${igdbGame.cover.image_id}.jpg`;
         const screenshotUrl = `https://images.igdb.com/igdb/image/upload/t_1080p/${igdbGame.screenshots[Math.floor(Math.random() * igdbGame.screenshots.length)].image_id}.png`;
         const genres = igdbGame.genres.map(genre => genre.name).join(", ");
@@ -51,6 +55,7 @@ export class Game extends Model {
         const game = {
             igdb_id: igdb_id,
             name: name,
+            slug: slug,
             coverUrl: coverUrl,
             screenshotUrl: screenshotUrl,
             genres: genres,
